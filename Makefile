@@ -43,6 +43,9 @@ build-in-docker:
 		$(NAME)-build make -e deps build
 	docker rmi $(NAME)-build || true
 
+build-multi:
+	docker buildx build --pull --push --platform linux/arm64/v8,linux/amd64 -f Dockerfile.multi -t $(IMAGE_NAME):$(BUILD_TAG) -t $(IMAGE_NAME):latest .
+
 clean:
 	rm -rf build/*
 	docker rm $(shell docker ps -aq) || true
